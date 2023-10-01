@@ -7,6 +7,7 @@ import { checkWinn, chekFull } from "./utils/chek";
 import { readGame, saveGame } from "./utils/saveGAme";
 
 function App() {
+  //Estado
   const [board, setBoard] = useState(() => {
     const boardLocalStorage = readGame("board");
 
@@ -19,14 +20,16 @@ function App() {
   });
   const [winner, setWinner] = useState(null);
 
+  //Resetear el juego
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setTurn(Turn.X);
     setWinner(null);
-    localStorage.removeItem('board')
-    localStorage.removeItem('turn')
+    localStorage.removeItem("board");
+    localStorage.removeItem("turn");
   };
 
+  //Actualizar el tablero
   const updateBoard = (index) => {
     if (board[index] || winner) return;
 
@@ -35,16 +38,21 @@ function App() {
     const newBoard = [...board];
     newBoard[index] = turn;
     const newWinner = checkWinn(newBoard);
+    //Gardando en local
 
-    saveGame(newBoard, newTurn);
-
+    //Comprobando si hay ganador o esta lleno
     if (newWinner) setWinner(newWinner);
     if (chekFull(newBoard)) setWinner(false);
 
     setBoard(newBoard);
     setTurn(newTurn);
   };
+  
+  useEffect(()=>{
+    saveGame(board, turn);
 
+  },[board,turn])
+  //Render
   return (
     <main>
       <h1>Tic Tac Toe </h1>
