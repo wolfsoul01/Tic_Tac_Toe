@@ -13,6 +13,8 @@ Puedes probar una demostración en vivo del juego [aquí](#).
 Para ejecutar este proyecto en tu máquina local, sigue estos pasos:
 
 1. Clona este repositorio:
-
+- Instala las dependencias con `npm install`
+- Inicia el servidor de desarrollo con `npm start`
+- La app se ejecutará en http://localhost:3000
 ```bash
 git clone https://github.com/wolfsoul01/tic-tac-toe.git
