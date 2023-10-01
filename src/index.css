@@ -61,3 +61,17 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.board{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+}
+.squire{
+  display: grid;
+  place-content: center ;
+  width: 80px;
+  height: 80px;
+  border: 1px solid #eee;
+  border-radius: 5px ;
+}
