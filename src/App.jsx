@@ -22,9 +22,24 @@ function Squire({ children, index, isTurn, updateBoard }) {
   };
 
   return (
-    <article className={`squire ${isTurn && "isTurn"}`} onClick={handelClick}>
+    <article
+      className={`squire ${isTurn && "isTurn alt"}`}
+      onClick={handelClick}
+    >
       {children}
     </article>
+  );
+}
+
+function ResetButton({ children, resetGame }) {
+  return (
+    <>
+      <div style={{ display: "flex" ,justifyContent:'center',margin:10}}>
+        <button className="butonReset" onClick={resetGame}>
+          {children}
+        </button>
+      </div>
+    </>
   );
 }
 
@@ -33,6 +48,11 @@ function App() {
   const [turn, setTurn] = useState(Turn.X);
   const [winner, setWinner] = useState(null);
 
+  const resetGame = () => {
+    setBoard(Array(9).fill(null));
+    setTurn(Turn.X);
+    setWinner(null);
+  };
   const checkWinn = (boardCheck) => {
     for (const combo of WIN_COMBOS) {
       const [a, b, c] = combo;
@@ -65,14 +85,14 @@ function App() {
   return (
     <main>
       <h1>Tic Tac Toe </h1>
+      <ResetButton resetGame={resetGame}>Reset</ResetButton>
 
       <section className="board">
         {board.map((_, index) => {
           return (
             <>
               <Squire key={index} updateBoard={updateBoard} index={index}>
-                {" "}
-                {board[index]}{" "}
+                {board[index]}
               </Squire>
             </>
           );
@@ -83,7 +103,18 @@ function App() {
         <Squire isTurn={turn === Turn.X}>{Turn.X}</Squire>
         <Squire isTurn={turn === Turn.O}>{Turn.O}</Squire>
       </section>
-      <h1>{winner && `Gano:${winner}`}</h1>
+
+     
+      
+      {winner && (
+        <section className="winner">
+          <article className="tab">
+            <h1>Gano:{winner}</h1>
+            <Squire>{winner}</Squire>
+            <ResetButton resetGame={resetGame}>Jugar Otra Ves</ResetButton>
+          </article>
+        </section>
+      )}
     </main>
   );
 }

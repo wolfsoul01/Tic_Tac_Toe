@@ -14,8 +14,6 @@
   -webkit-text-size-adjust: 100%;
 }
 
-
-
 body {
   margin: 0 auto;
   display: flex;
@@ -62,34 +60,71 @@ button:focus-visible {
   }
 }
 
-.board{
+.board {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
-.squire{
+.squire {
   display: grid;
-  place-content: center ;
+  place-content: center;
   width: 80px;
   height: 80px;
   border: 1px solid #eee;
-  border-radius: 5px ;
+  border-radius: 5px;
   font-size: 40px;
   cursor: pointer;
   user-select: none;
 }
 
-.turn{
+.alt {
+  pointer-events: none;
+}
+
+.turn {
   display: flex;
   gap: 20px;
   justify-content: center;
   margin-top: 20px;
 }
 
-.turn >* {
+.turn > * {
   border: none;
+  pointer-events: none;
 }
 
-.isTurn{
+.isTurn {
   background-color: #747bff;
+}
+
+.winner {
+  position: absolute;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 0;
+  left: 0;
+  
+}
+
+.tab {
+  background-color: #222;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  padding: 10px;
+  border: 2px solid #eee;
+  border-radius: 5px;
+  opacity: 1;
+}
+
+.buttonReset{
+  margin: 5px ;
+  text-align: center;
+  border: 2px solid #eee;
 }
