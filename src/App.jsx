@@ -3,6 +3,7 @@ import Squire from "./components/Squire";
 import ResetButton from "./components/RestButton";
 import {Turn} from './utils/const'
 import TableWinner from "./components/TableWinner";
+import {checkWinn,chekFull} from './utils/chek'
 
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
@@ -14,24 +15,7 @@ function App() {
     setTurn(Turn.X);
     setWinner(null);
   };
-  const checkWinn = (boardCheck) => {
-    for (const combo of WIN_COMBOS) {
-      const [a, b, c] = combo;
-
-      if (
-        boardCheck[a] &&
-        boardCheck[a] === boardCheck[b] &&
-        boardCheck[a] === boardCheck[c]
-      ) {
-        return boardCheck[a];
-      }
-    }
-    return false;
-  };
-
-  const chekFull = (boardCheck) => {
-    return boardCheck.every((item) => item !== null);
-  };
+ 
 
   const updateBoard = (index) => {
     if (board[index] || winner) return;
@@ -48,6 +32,7 @@ function App() {
     setBoard(newBoard);
     setTurn(newTurn);
   };
+
   return (
     <main>
       <h1>Tic Tac Toe </h1>
@@ -70,7 +55,7 @@ function App() {
         <Squire isTurn={turn === Turn.O}>{Turn.O}</Squire>
       </section>
 
-      <TableWinner/>
+      <TableWinner winner={winner} resetGame={resetGame}/>
     </main>
   );
 }
