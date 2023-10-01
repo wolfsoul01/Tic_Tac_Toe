@@ -74,4 +74,16 @@ button:focus-visible {
   height: 80px;
   border: 1px solid #eee;
   border-radius: 5px ;
+  font-size: 40px;
+}
+
+.turn{
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.isTurn{
+  background-color: #747bff;
 }
