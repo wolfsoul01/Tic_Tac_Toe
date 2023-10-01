@@ -1,47 +1,8 @@
-import { useState } from "react";
-
-const Turn = {
-  X: "x",
-  O: "o",
-};
-
-const WIN_COMBOS = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-];
-
-function Squire({ children, index, isTurn, updateBoard }) {
-  const handelClick = () => {
-    updateBoard(index);
-  };
-
-  return (
-    <article
-      className={`squire ${isTurn && "isTurn alt"}`}
-      onClick={handelClick}
-    >
-      {children}
-    </article>
-  );
-}
-
-function ResetButton({ children, resetGame }) {
-  return (
-    <>
-      <div style={{ display: "flex" ,justifyContent:'center',margin:10}}>
-        <button className="butonReset" onClick={resetGame}>
-          {children}
-        </button>
-      </div>
-    </>
-  );
-}
+import { useState, useEffect } from "react";
+import Squire from "./components/Squire";
+import ResetButton from "./components/RestButton";
+import {Turn} from './utils/const'
+import TableWinner from "./components/TableWinner";
 
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
@@ -68,11 +29,9 @@ function App() {
     return false;
   };
 
-  const chekFull=(boardCheck)=>{
-
-     return boardCheck.every(item=> item !== null)
-
-  }
+  const chekFull = (boardCheck) => {
+    return boardCheck.every((item) => item !== null);
+  };
 
   const updateBoard = (index) => {
     if (board[index] || winner) return;
@@ -83,9 +42,8 @@ function App() {
     newBoard[index] = turn;
     const newWinner = checkWinn(newBoard);
 
-    
     if (newWinner) setWinner(newWinner);
-    if( chekFull(newBoard)) setWinner(false)
+    if (chekFull(newBoard)) setWinner(false);
 
     setBoard(newBoard);
     setTurn(newTurn);
@@ -112,17 +70,7 @@ function App() {
         <Squire isTurn={turn === Turn.O}>{Turn.O}</Squire>
       </section>
 
-     
-      
-      {(winner !== null) &&(
-        <section className="winner">
-          <article className="tab">
-            <h1>{winner ?`Gano🥳:`: 'Empate'}</h1>
-            <Squire>{winner ?winner:'😐' }</Squire>
-            <ResetButton resetGame={resetGame}>Jugar Otra Ves</ResetButton>
-          </article>
-        </section>
-      )}
+      <TableWinner/>
     </main>
   );
 }
