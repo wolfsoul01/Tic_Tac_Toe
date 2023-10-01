@@ -68,6 +68,12 @@ function App() {
     return false;
   };
 
+  const chekFull=(boardCheck)=>{
+
+     return boardCheck.every(item=> item !== null)
+
+  }
+
   const updateBoard = (index) => {
     if (board[index] || winner) return;
 
@@ -77,7 +83,9 @@ function App() {
     newBoard[index] = turn;
     const newWinner = checkWinn(newBoard);
 
+    
     if (newWinner) setWinner(newWinner);
+    if( chekFull(newBoard)) setWinner(false)
 
     setBoard(newBoard);
     setTurn(newTurn);
@@ -106,11 +114,11 @@ function App() {
 
      
       
-      {winner && (
+      {(winner !== null) &&(
         <section className="winner">
           <article className="tab">
-            <h1>Gano:{winner}</h1>
-            <Squire>{winner}</Squire>
+            <h1>{winner ?`Gano🥳:`: 'Empate'}</h1>
+            <Squire>{winner ?winner:'😐' }</Squire>
             <ResetButton resetGame={resetGame}>Jugar Otra Ves</ResetButton>
           </article>
         </section>
