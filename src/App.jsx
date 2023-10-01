@@ -1,21 +1,31 @@
 import { useState, useEffect } from "react";
 import Squire from "./components/Squire";
 import ResetButton from "./components/RestButton";
-import {Turn} from './utils/const'
+import { Turn } from "./utils/const";
 import TableWinner from "./components/TableWinner";
-import {checkWinn,chekFull} from './utils/chek'
+import { checkWinn, chekFull } from "./utils/chek";
+import { readGame, saveGame } from "./utils/saveGAme";
 
 function App() {
-  const [board, setBoard] = useState(Array(9).fill(null));
-  const [turn, setTurn] = useState(Turn.X);
+  const [board, setBoard] = useState(() => {
+    const boardLocalStorage = readGame("board");
+
+    return boardLocalStorage ? boardLocalStorage : Array(9).fill(null);
+  });
+  const [turn, setTurn] = useState(() => {
+    const turnLocalStorage = readGame("turn");
+
+    return turnLocalStorage ? turnLocalStorage : Turn.X;
+  });
   const [winner, setWinner] = useState(null);
 
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setTurn(Turn.X);
     setWinner(null);
+    localStorage.removeItem('board')
+    localStorage.removeItem('turn')
   };
- 
 
   const updateBoard = (index) => {
     if (board[index] || winner) return;
@@ -25,6 +35,8 @@ function App() {
     const newBoard = [...board];
     newBoard[index] = turn;
     const newWinner = checkWinn(newBoard);
+
+    saveGame(newBoard, newTurn);
 
     if (newWinner) setWinner(newWinner);
     if (chekFull(newBoard)) setWinner(false);
@@ -55,7 +67,7 @@ function App() {
         <Squire isTurn={turn === Turn.O}>{Turn.O}</Squire>
       </section>
 
-      <TableWinner winner={winner} resetGame={resetGame}/>
+      <TableWinner winner={winner} resetGame={resetGame} />
     </main>
   );
 }
